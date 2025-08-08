@@ -10,6 +10,11 @@ return array (
     'debug' => '1',
     'title' => 'Api Gota',
   ),
+  'services' => [
+        'public' => [
+            'ApiReceitas', 
+        ],
+    ],
   
    
   

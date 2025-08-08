@@ -168,14 +168,5 @@ RewriteRule ^xhr-contact-delete$ engine.php?class=ContactList&method=Delete&%{QU
 
 
 #RESTFUL routes
-RewriteRule ^contacts/([A-Za-z0-9]*)$ rest.php?class=ContactRestService&method=handle&id=$1&%{QUERY_STRING} [NC]
-RewriteRule ^contacts/([A-Za-z-_0-9]*)/([A-Za-z-_0-9]*)$ rest.php?class=ContactRestService&method=$2&id=$1&%{QUERY_STRING} [NC]
-RewriteRule ^contacts$ rest.php?class=ContactRestService&method=handle&%{QUERY_STRING} [NC]
-
-RewriteRule ^users/([A-Za-z0-9]*)$ rest.php?class=SystemUserRestService&method=handle&id=$1&%{QUERY_STRING} [NC]
-RewriteRule ^users/([A-Za-z-_0-9]*)/([A-Za-z-_0-9]*)$ rest.php?class=SystemUserRestService&method=$2&id=$1&%{QUERY_STRING} [NC]
-RewriteRule ^users$ rest.php?class=SystemUserRestService&method=handle&%{QUERY_STRING} [NC]
-
-RewriteRule ^user-groups/([A-Za-z0-9]*)$ rest.php?class=SystemUserGroupRestService&method=handle&id=$1&%{QUERY_STRING} [NC]
-RewriteRule ^user-groups/([A-Za-z-_0-9]*)/([A-Za-z-_0-9]*)$ rest.php?class=SystemUserGroupRestService&method=$2&id=$1&%{QUERY_STRING} [NC]
-RewriteRule ^user-groups$ rest.php?class=SystemUserGroupRestService&method=handle&%{QUERY_STRING} [NC]
+RewriteRule ^receitas/([A-Za-z0-9]*)$ rest.php?class=ApiReceita&method=onGet&%{QUERY_STRING} [NC]
+RewriteRule ^receitas$ rest.php?class=ApiReceita&method=onGet&%{QUERY_STRING} [NC]
