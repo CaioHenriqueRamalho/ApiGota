@@ -1,3 +1,1 @@
-<service name="start/receitas" class="ApiReceitas"/>
-
-
+<service name="api/receitas" class="ApiReceitas"/>

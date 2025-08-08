@@ -11,13 +11,12 @@ class ApiGota extends TPage
     public function onGetData($param = null)
     {
         try {
-            TTransaction::open('Netcfg'); // Altere para o nome do seu banco (ex: 'my_database')
+            TTransaction::open('Netcfg'); 
 
-            $repo = new TRepository('TABCVALID'); // Ex: Produto, Cliente
+            $repo = new TRepository('TABCVALID'); 
             $criteria = new TCriteria;
 
-            // Opcional: adicione filtros se quiser restringir os dados
-            // $criteria->add(new TFilter('status', '=', 'ativo'));
+            
 
             $objects = $repo->load($criteria);
             $result = [];
@@ -31,7 +30,7 @@ class ApiGota extends TPage
             TTransaction::close();
 
             // Exibe JSON direto na tela
-            echo json_encode($result, JSON_PRETTY_PRINT);
+            echo json_encode($result, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT);
         } catch (Exception $e) {
             new TMessage('error', $e->getMessage());
             TTransaction::rollback();
