@@ -1,23 +1,16 @@
 <?php
 class ApiReceita
 {
-    /**
-     * Endpoint GET
-     * URL: rest.php?class=ApiReceita
-     */
-    public function onGet($param)
+    public function onPost($param)
     {
         try {
-            // Abre transação com o banco de dados (nome conforme application.ini)
             TTransaction::open('Netcfg');
 
-            // Usa o repositório do ActiveRecord Receita
             $repo = new TRepository('TABCVALID');
             $criteria = new TCriteria;
 
-            // Filtro opcional: ?id=1
-            if (!empty($param['id'])) {
-                $criteria->add(new TFilter('id', '=', $param['id']));
+            if (!empty($param['IDSENHA'])) {
+                $criteria->add(new TFilter('IDSENHA', '=', $param['IDSENHA']));
             }
 
             $receitas = $repo->load($criteria);
@@ -31,9 +24,7 @@ class ApiReceita
 
             TTransaction::close();
 
-            // Retorna JSON simples
             return $result;
-
         } catch (Exception $e) {
             return ['error' => $e->getMessage()];
         }
