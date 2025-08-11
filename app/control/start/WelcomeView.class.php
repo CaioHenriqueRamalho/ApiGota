@@ -13,8 +13,12 @@ class WelcomeView extends TPage
 
         $idsenha = new TEntry('IDSENHA');
         $idsenha->setSize('50%');
+        
+        $idcnpj = new TEntry('IDCNPJ');
+        $idcnpj->setSize('80%');
+        
 
-        $this->form->addFields([new TLabel('IDSENHA')], [$idsenha]);
+        $this->form->addFields([new TLabel('Cnpj')], [$idcnpj],[new TLabel('Senha')], [$idsenha]);
 
         // Botão chama método onSearch (instance method)
         $this->form->addAction('Buscar', new TAction([$this, 'onSearch']), 'fa:search blue');
@@ -34,15 +38,20 @@ class WelcomeView extends TPage
     {
         try
           {
+             
              if(empty($param['IDSENHA'])) 
                {
-                  throw new Exception('Informe o campo IDSENHA.');
+                  throw new Exception('Informe o campo Senha .');
+               }
+             if(empty($param['IDCNPJ'])) 
+               {
+                  throw new Exception('Informe o campo Cnpj .');
                }
 
               // Ajuste a URL conforme seu projeto
              $url = 'http://localhost/ApiGota/rest.php?class=ApiReceita&method=onPost';
 
-             $payload = json_encode(['IDSENHA' => $param['IDSENHA']]);
+             $payload = json_encode(['IDSENHA' => $param['IDSENHA'], 'IDCNPJ' => $param['IDCNPJ']]);
 
              $ch = curl_init($url);
              curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
