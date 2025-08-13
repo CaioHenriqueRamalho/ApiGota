@@ -16,6 +16,7 @@ class WelcomeView extends TPage
         
         $idcnpj = new TEntry('IDCNPJ');
         $idcnpj->setSize('80%');
+        $idcnpj->setMask('9!');
         
 
         $this->form->addFields([new TLabel('Cnpj')], [$idcnpj],[new TLabel('Senha')], [$idsenha]);
