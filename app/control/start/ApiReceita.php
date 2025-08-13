@@ -5,6 +5,7 @@ class ApiReceita
     {
         try 
           {
+              header('Content-Type: application/json; charset=utf-8');
               TTransaction::open('Netcfg');
 
               $repo = new TRepository('TABCVALID');
@@ -22,6 +23,17 @@ class ApiReceita
                 {
                     $criteria->add(new TFilter('IDCNPJ', '=', $param['IDCNPJ']));
                     $hasCriteria = true;
+                }
+                
+              if(!$hasCriteria) 
+                {
+                    TTransaction::close();
+                    http_response_code(400);
+                    echo json_encode([
+                        'status'  => 'error',
+                        'message' => 'É necessário informar IDSENHA ou IDCNPJ para consultar'
+                    ], JSON_UNESCAPED_UNICODE);
+                     return;
                 }
 
               $receitas = $repo->load($criteria);
