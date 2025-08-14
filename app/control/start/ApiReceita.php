@@ -14,23 +14,20 @@ class ApiReceita
               // Verifica se pelo menos um parâmetro foi informado
               $hasCriteria = false;
 
-              if(!empty($param['IDSENHA'])) 
+              if(!empty($param['IDLIVRE'] and $param['IDCNPJ'])) 
                 {
-                    $criteria->add(new TFilter('IDSENHA', '=', $param['IDSENHA']));
-                    $hasCriteria = true;
-                }
-              if(!empty($param['IDCNPJ'])) 
-                {
+                    $criteria->add(new TFilter('IDLIVRE', '=', $param['IDLIVRE']));
                     $criteria->add(new TFilter('IDCNPJ', '=', $param['IDCNPJ']));
                     $hasCriteria = true;
                 }
-                
+              
+              //Bloqueia se não enviou nenhum parâmetro  
               if(!$hasCriteria) 
                 {
                     TTransaction::close();
                     http_response_code(400);
                     echo json_encode([
-                        'status'  => 'error',
+                        'permissao'  => '0',
                         'message' => 'É necessário informar IDSENHA ou IDCNPJ para consultar'
                     ], JSON_UNESCAPED_UNICODE);
                      return;
@@ -44,7 +41,7 @@ class ApiReceita
                     TTransaction::close();
                     http_response_code(404);
                     return [
-                        'status'  => 'error',
+                        'permissao'  => '0',
                         'message' => 'Usuário não localizado'
                     ];
                 }
@@ -59,7 +56,7 @@ class ApiReceita
              TTransaction::close();
              http_response_code(200);
              return [
-                  'status' => 'success',
+                  'permissao' => '1',
                   'data'   => $result
              ];
           } 
