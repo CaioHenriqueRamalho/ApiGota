@@ -1,0 +1,66 @@
+Documentação API - Saveincloud - Validação de senha Usuario para Expedição e Receitario
+------------------
+Banco: NetCValid.FDB
+Nuvem: saveincloud (Inicio-30/07/2025)
+Acesso ao Panel:
+https://app.jelastic.saveincloud.net/
+email: ti@gotadeleite.com.br
+senha: Gota33031242@
+--------------------
+Acesso ao Firebird e FTP.
+Dados de acesso ao Firebird:
+Host: validcgotaleite.sp1.br.saveincloud.net.br
+User Firebird: SYSDBA
+Password Firebird: vI2gGKCYcLNYRFpbQnX4
+Path do banco: /opt/firebird/data/NAMEDATABASE.FDB
+acesso ao FTP:
+Host: validcgotaleite.sp1.br.saveincloud.net.br
+User FTP: ftp-user
+Password FTP:  tfVFJ0N0WP44MS94f8E1 
+Portas de acesso:
+Serviço: FIREBIRD Porta: 16586
+Serviço: FTP Porta: 12691
+database=casebre.jelastic.saveincloud.net/11345:/opt/firebird/data/SPDDADOS.FDB
+-------------------
+Extrutura das tabelas
+Tabela: TabCValiD
+----------------
+CREATE TABLE TABCVALID (
+    ID       INTEGER NOT NULL, // sequecial gentacvaid (a)
+    IDCNPJ   VARCHAR(14),      // cnpj, documento que valia a url no contner(nuvem)
+    IDSENHA  VARCHAR(15),      // senha (validar-Maiuculo,minusculo,numero e caracter especial)
+    IDUSUAR  VARCHAR(30),      // nome do detentor da senha
+    IDN1     VARCHAR(2),       // de A1...Z9 nivel de permisSao do que pode fazer com a senha
+    IDN2     VARCHAR(2),       .
+    IDN3     VARCHAR(2),       .
+    IDN4     VARCHAR(2),       .
+    IDESP    VARCHAR(50),      // identificacao da especialidade
+    CRF      VARCHAR(8),       // casdastro Federal (CRM/Crefito/CRO...)
+    IDLIVRE  VARCHAR(50)       // campo livre informação
+);
+
+---------------------------------------------------------------------------------------------------------------------------
+API : https://spdnetweb.sp1.br.saveincloud.net.br/Api/rest.php?class=ApiReceita&method=onPost
+
+POST = CNPJ sem pontuacao + 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+https://spdnetweb.sp1.br.saveincloud.net.br/Api/rest.php?class=ApiReceita&method=onPost&IDCNPJ=52050911000127&IDSENHA=22064834
+
+
+
+
