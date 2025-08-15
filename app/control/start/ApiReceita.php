@@ -50,9 +50,22 @@ class ApiReceita
              $result = [];
              foreach($receitas as $receita) 
                     {
-                       $result[] = $receita->toArray();
+                        $arr = $receita->toArray();
+                        $result[] = [
+                            'ID'      => $arr['ID']      ?? null,
+                            'IDCNPJ'  => $arr['IDCNPJ']  ?? null,
+                            'IDUSUAR' => $arr['IDUSUAR'] ?? null,
+                            'IDN1'    => $arr['IDN1']    ?? null,
+                            'IDN2'    => $arr['IDN2']    ?? null,
+                            'IDN3'    => $arr['IDN3']    ?? null,
+                            'IDN4'    => $arr['IDN4']    ?? null,
+                            'IDESP'   => $arr['IDESP']   ?? null,
+                            'CRF'     => $arr['CRF']     ?? null,
+                            'IDLIVRE' => $arr['IDLIVRE'] ?? null
+                        ];
                     }
 
+             
              TTransaction::close();
              http_response_code(200);
              return [

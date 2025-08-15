@@ -3,30 +3,84 @@ class ApiReceita
 {
     public function onPost($param)
     {
-        try {
-            TTransaction::open('Netcfg');
+        try 
+          {
+              header('Content-Type: application/json; charset=utf-8');
+              TTransaction::open('Netcfg');
 
-            $repo = new TRepository('TABCVALID');
-            $criteria = new TCriteria;
+              $repo = new TRepository('TABCVALID');
+              $criteria = new TCriteria;
 
-            if (!empty($param['IDSENHA'])) {
-                $criteria->add(new TFilter('IDSENHA', '=', $param['IDSENHA']));
-            }
+              // Verifica se pelo menos um parâmetro foi informado
+              $hasCriteria = false;
 
-            $receitas = $repo->load($criteria);
-
-            $result = [];
-            if ($receitas) {
-                foreach ($receitas as $receita) {
-                    $result[] = $receita->toArray();
+              if(!empty($param['IDLIVRE'] and $param['IDCNPJ'])) 
+                {
+                    $criteria->add(new TFilter('IDLIVRE', '=', $param['IDLIVRE']));
+                    $criteria->add(new TFilter('IDCNPJ', '=', $param['IDCNPJ']));
+                    $hasCriteria = true;
                 }
-            }
+              
+              //Bloqueia se não enviou nenhum parâmetro  
+              if(!$hasCriteria) 
+                {
+                    TTransaction::close();
+                    http_response_code(400);
+                    echo json_encode([
+                        'permissao'  => '0',
+                        'message' => 'É necessário informar IDSENHA ou IDCNPJ para consultar'
+                    ], JSON_UNESCAPED_UNICODE);
+                     return;
+                }
 
-            TTransaction::close();
+              $receitas = $repo->load($criteria);
 
-            return $result;
-        } catch (Exception $e) {
-            return ['error' => $e->getMessage()];
-        }
+              // Se não encontrou registros, retorna erro
+              if(!$receitas) 
+                {
+                    TTransaction::close();
+                    http_response_code(404);
+                    return [
+                        'permissao'  => '0',
+                        'message' => 'Usuário não localizado'
+                    ];
+                }
+
+             // Monta resultado
+             $result = [];
+             foreach($receitas as $receita) 
+                    {
+                        $arr = $receita->toArray();
+                        $result[] = [
+                            'ID'      => $arr['ID']      ?? null,
+                            'IDCNPJ'  => $arr['IDCNPJ']  ?? null,
+                            'IDUSUAR' => $arr['IDUSUAR'] ?? null,
+                            'IDN1'    => $arr['IDN1']    ?? null,
+                            'IDN2'    => $arr['IDN2']    ?? null,
+                            'IDN3'    => $arr['IDN3']    ?? null,
+                            'IDN4'    => $arr['IDN4']    ?? null,
+                            'IDESP'   => $arr['IDESP']   ?? null,
+                            'CRF'     => $arr['CRF']     ?? null,
+                            'IDLIVRE' => $arr['IDLIVRE'] ?? null
+                        ];
+                    }
+
+             
+             TTransaction::close();
+             http_response_code(200);
+             return [
+                  'permissao' => '1',
+                  'data'   => $result
+             ];
+          } 
+        catch (Exception $e) 
+          {
+             TTransaction::rollback();
+             http_response_code(500);
+             return [
+                'status'  => 'error',
+                 'message' => $e->getMessage()
+             ];
+          }
     }
 }
