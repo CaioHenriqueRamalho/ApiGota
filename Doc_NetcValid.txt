@@ -42,7 +42,15 @@ CREATE TABLE TABCVALID (
 ---------------------------------------------------------------------------------------------------------------------------
 API : https://spdnetweb.sp1.br.saveincloud.net.br/Api/rest.php?class=ApiReceita&method=onPost
 
-POST = CNPJ sem pontuacao + 
+POST = CNPJ sem pontuacao + Token gerado pelo sistema
+
+Retorno JSON = Validar a variavel do JSON chamada permissao, se permissao for igual a 1 documento e valido, se for igual a 0 documento nao valido
+
+
+
+
+
+ 
 
 
 
@@ -59,7 +67,7 @@ POST = CNPJ sem pontuacao +
 
 
 
-https://spdnetweb.sp1.br.saveincloud.net.br/Api/rest.php?class=ApiReceita&method=onPost&IDCNPJ=52050911000127&IDSENHA=22064834
+
 
 
 
